@@ -11,6 +11,7 @@ public class Bill implements Serializable{
   private Integer total;
   private Integer uid;
   private String state;
+  private String image;
 
 public Integer getPid() {
 	return pid;
@@ -59,6 +60,12 @@ public Integer getUid() {
 }
 public void setUid(Integer uid) {
 	this.uid = uid;
+}
+public String getImage() {
+	return image;
+}
+public void setImage(String image) {
+	this.image = image;
 }
 
 

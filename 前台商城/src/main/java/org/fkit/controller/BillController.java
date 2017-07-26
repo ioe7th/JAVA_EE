@@ -20,12 +20,12 @@ public class BillController {
 	//点击购买生成订单
 	@RequestMapping(value="/pay")
 	  public ModelAndView buy(Integer pid,Integer count,String pname,
-			  Integer shop_price,Integer uid,HttpSession session, ModelAndView mv){
+			  Integer shop_price,Integer uid,String image,HttpSession session, ModelAndView mv){
 		double total  =count*shop_price;
 	    Date d=new Date();
 		Long pno=d.getTime();
 		String state="unpaid";
-	    billservice.insertBill(pid, pno, pname, shop_price, count, total, uid, state);
+	    billservice.insertBill(pid, pno, pname, shop_price, count, total, uid, state,image);
      //读取这个订单(倒序读取)
 	     Bill bill=billservice.selectnew();
 	     session.setAttribute("bill", bill);

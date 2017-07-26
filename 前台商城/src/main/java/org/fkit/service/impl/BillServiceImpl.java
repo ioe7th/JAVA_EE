@@ -15,9 +15,9 @@ public class BillServiceImpl implements BillService {
 	    private BillMapper billMapper;
 	@Override
 	public void insertBill(Integer pid, Long  pno, String pname, Integer shop_price, Integer count, double total,
-			Integer uid, String state) {
+			Integer uid, String state,String image) {
 		// TODO Auto-generated method stub
-		 billMapper.insertbill(pid, pno, pname, shop_price, count, total, uid, state);
+		 billMapper.insertbill(pid, pno, pname, shop_price, count, total, uid, state,image);
 	}
 	@Override
 	public Bill selectnew() {

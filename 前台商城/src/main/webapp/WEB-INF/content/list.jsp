@@ -145,7 +145,7 @@
 												<li class="td td-item">
 													<div class="item-pic">
 														<a href="#" class="J_MakePoint"> <img
-															src="images/kouhong.jpg_80x80.jpg" class="itempic">
+															src="images/${comment.path }" class="itempic">
 														</a>
 													</div>
 												</li>

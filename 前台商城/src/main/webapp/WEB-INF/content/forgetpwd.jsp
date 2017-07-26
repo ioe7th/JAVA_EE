@@ -47,7 +47,7 @@
 						<div class="user-pass">
 							<label for="password"><i class="am-icon-lock">&nbsp;</i></label>
 							<input type="email" name="email" value="" id="password"
-								placeholder="请输入你的163邮箱地址">
+								placeholder="请输入你的邮箱地址">
 						</div>
 				</div>
 

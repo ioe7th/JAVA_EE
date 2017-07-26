@@ -118,137 +118,10 @@
 
 					<div class="comment-main">
 
-						<div>
-							<table
-								class="table table-bordered table-hover table-striped table-condensed">
-								<tr>
-									<td colspan='3'>
-										<h2>订单评价</h2>
-									</td>
-								</tr>
-								<tr>
-									<th width="33%">评价项目</th>
-									<th width="33%">星星</th>
-									<th width="33%">分数</th>
-								</tr>
-								<tr class="tr">
-									<td>物流速度</td>
-									<td><span class="glyphicon glyphicon-star-empty"
-										aria-hidden="true"></span> <span
-										class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-										<span class="glyphicon glyphicon-star-empty"
-										aria-hidden="true"></span> <span
-										class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-										<span class="glyphicon glyphicon-star-empty"
-										aria-hidden="true"></span></td>
-									<td class="score" id="tra"></td>
-								</tr>
-								<tr class="tr">
-									<td>商品质量</td>
-									<td><span class="glyphicon glyphicon-star-empty"
-										aria-hidden="true"></span> <span
-										class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-										<span class="glyphicon glyphicon-star-empty"
-										aria-hidden="true"></span> <span
-										class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-										<span class="glyphicon glyphicon-star-empty"
-										aria-hidden="true"></span></td>
-									<td class="score" id="pro"></td>
-								</tr>
-								<tr class="tr">
-									<td>卖家服务</td>
-									<td><span class="glyphicon glyphicon-star-empty"
-										aria-hidden="true"></span> <span
-										class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-										<span class="glyphicon glyphicon-star-empty"
-										aria-hidden="true"></span> <span
-										class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-										<span class="glyphicon glyphicon-star-empty"
-										aria-hidden="true"></span></td>
-									<td class="score" id="ser"></td>
-								</tr>
-								<tr>
-
-									<td colspan="3" style="text-align: center;">
-										<button type="button" class="btn btn-info"
-											onclick="javascript:location.reload();">重选</button>
-									</td>
-								</tr>
-							</table>
-						</div>
-
-						<script>  
-        $(function(){  
-            /**  
-             * 整体思路:该评价案例主要分为两种情况，1、当某行的星星还没有被选中时，此时鼠标移到哪颗星星时，就显示该星星对应的文字提示，前面的星星包括自己都变成实心星，如果该行后面还有星星，那后面的依然是空心星，鼠标离开时文字提示消失，该行星星全部变回原来的空心星；2、当某行有星星被选中，即鼠标点中某颗星，该星星以及前面的星星都变成实心星，如果该行后面还有星星，则依然还是空心星，分数和文字内容显示在该行的后面一列。鼠标移到某颗星星时，还是显示该星星对应的文字提示，前面的星星包括自己依然变成实心星，如果该行后面还有星星，那后面的依然是空心星，鼠标离开时，继续显示原来选中时星星状态。如果重新选中星星，则此时是新的评分分数，新的星星状态了。   
-            为所有的span标签绑定mouseout和mouseover事件。bind({事件名：function(){},事件名：function(){}})的方法绑定多个事件  
-            */  
-            var tip_text = '',$parent = {};  
-            $(".glyphicon").bind({  
-                mouseout: function () {  
-                    $parent.children('.extra').remove();  
-                    var score = $parent.siblings('.score').html();  
-                    if(score){//有星星选中时  
-                        $parent.children(":lt("+ parseInt(score) +")").removeClass('glyphicon-star-empty').addClass('glyphicon-star');//PS:此处应该加上parseInt进行整型转换，否则会没有效果  
-                        $parent.children(":gt("+ eval(parseInt(score)-1) + ")").removeClass('glyphicon-star').addClass('glyphicon-star-empty');//PS:此处要记得加eval，进行js计算，不然会报“jquery.min.js:2 Uncaught Error: Syntax error, unrecognized expression: NaN)”的错误  
-                    }else{  
-                        $(this).prevAll().andSelf().removeClass('glyphicon-star').addClass('glyphicon-star-empty');  
-                    }  
-                },  
-                mouseover: function () {  
-                    $parent = $(this).parent();//把父节点存放起来  
-                    var score = $parent.siblings('.score').html();  
-                    $parent.append('<span class="extra dot-left"></span><span class="extra tip"></span>');//添加提示框  
-                    tip_text = indexText($(this).index());//得到相应的文字提示  
-                    $(this).siblings('.tip').html(tip_text);//显示文字提示  
-                    $(this).prevAll().andSelf().removeClass('glyphicon-star-empty').addClass('glyphicon-star');  
-                    if(score){//当有星星选中时，为了解决鼠标移到选中星星的的前面星星时的小bug，此时会出现前面星星鼠标滑动时，星星颜色不变化现象  
-                        $(this).nextAll().not('.extra').removeClass('glyphicon-star').addClass('glyphicon-star-empty');     
-                    }  
-                },  
-                click: function(){  
-                    var score = $(this).index() + 1;  
-                    $parent.siblings('.score').html(score+'(' + tip_text + ')');  
-                    $(this).prevAll().andSelf().removeClass('glyphicon-star-empty').addClass('glyphicon-star');  
-                }  
-            });  
-  
-            $('.btn-success').click(function(){  
-                var allScore = '';  
-                $('.score').each(function(){  
-                    var text = $(this).html();  
-                    if(text == ''){  
-                        alert('请完成每项的评分后再提交!');  
-                        throw "请完成每项的评分后再提交!";//向浏览器抛出异常，终止程序运行，用了return false试了下，还是会继续执行下面的弹窗，这里用throw刚好恰到好处,如果想继续用return false则可以改成if...else...进行判断处理也可以。  
-                        //return false;  
-                    }  
-                    allScore += $(this).siblings(":first").html() + ':' + text + '\n';  
-                })  
-                alert(allScore);  
-            })  
-        })  
-  
-        //封装文字提示函数  
-        function indexText(i){  
-            switch(i){  
-                case 0:  
-                    return 'Very dissatisfied';  
-                case 1:  
-                    return 'Dissatisfied';  
-                case 2:  
-                    return 'commonly';  
-                case 3:  
-                    return 'Satisfied';  
-                case 4:  
-                    return 'Very satisfied';  
-            }  
-        }  
-    </script>
-						<!-- 以上是评分 -->
 						<div class="comment-list">
 							<div class="item-pic">
 								<a href="#" class="J_MakePoint"> <img
-									src="images/comment.jpg_400x400.jpg" class="itempic">
+									src="images/${sessionScope.bill.image}" class="itempic">
 								</a>
 							</div>
 
@@ -269,25 +142,60 @@
 								</div>
 							</div>
 							<div class="clear"></div>
+				<form action="doview" method="post" enctype="multipart/form-data">
+				        <input type="hidden" name="pno"   value="${sessionScope.bill.pno }">
 							<div class="item-comment">
-
-								<textarea id="comment" placeholder="请写下对宝贝的感受吧，对他人帮助很大哦！"></textarea>
-							</div>
-							<form action="upload" enctype="multipart/form-data" method="post">
+                                  <label for="content" class="control-label">评论:</label>
+            					  <textarea class="form-control" name="comment" id="content"></textarea>
+            			    </div>
+							
 								<div class="filePic">
-									<input type="hidden" id="pno" name="pno"
-										value="${sessionScope.bill.pno }"> <input type="file"
-										name="file" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*">
-									<input type="submit" value="上传" class="am-btn am-btn-danger">
-									<img src="images/image.jpg" alt="">
+									<label for="file">上传图片</label>
+    							    <input type="file" name="file" id="file">
+<!-- 									<img src="images/image.jpg" alt=""> -->
 								</div>
-							</form>
-							<div class="item-opinion"></div>
-						</div>
+						
+						
+							<div class="form-group">
+							   <label class="col-sm-4 control-label">物流评分：</label>
+                            	<div class="col-sm-5">
+                                	<select id="logistics_mark" name="tra" class="selectpicker show-tick form-control" data-live-search="false">
+                                        <option value="5">5</option>
+                                        <option value="4">4</option>
+                                        <option value="3">3</option>
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                	</select>
+                            	</div>
+                          	</div>
+                          	<div class="form-group">
+                           		<label class="col-sm-4  control-label">质量评分：</label>
+                            	<div class="col-sm-5">
+                                	<select id="quality_mark" name="pro" class="selectpicker show-tick form-control" data-live-search="false">
+                                        <option value="5">5</option>
+                                        <option value="4">4</option>
+                                        <option value="3">3</option>
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                	</select>
+                            	</div>
+                          	</div>
+                          	<div class="form-group">
+                           		<label class="col-sm-4  control-label">服务评分：</label>
+                            	<div class="col-sm-5">
+                                	<select id="service_mark" name="ser" class="selectpicker show-tick form-control" data-live-search="false">
+                                        <option value="5">5</option>
+                                        <option value="4">4</option>
+                                        <option value="3">3</option>
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                	</select>
+                            	</div>					
+							</div>
 						<div class="info-btn">
-							<div class="am-btn am-btn-danger" onclick="view()">发表评论</div>
-						</div>
-
+        						<button type="submit" class="am-btn am-btn-danger">提交</button>
+					</div>
+	          </form>
 
 
 
@@ -300,20 +208,6 @@
 								
 							});
 				     })
-				     
-				     
-				     function view(){
-					        var tra=document.getElementById('tra').innerText;
-					        var pro=document.getElementById('pro').innerText;
-					        var ser=document.getElementById('ser').innerText;
-					        var pno=document.getElementById("pno").value;
-					        var comment =document.getElementById("comment").value;
-						    //拼接url
-						    var url = "doview?";
-						    url += "pno="+pno+"&tra="+tra+"&pro="+pro+"&ser="+ser+"&comment="+comment;
-						    //重新定位url
-						    window.location = url;
-						}
 					</script>
 
 

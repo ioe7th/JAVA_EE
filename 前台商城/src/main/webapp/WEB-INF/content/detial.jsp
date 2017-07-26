@@ -391,7 +391,7 @@
 							    	 var image=document.getElementById("image").value;
 							    	 var pname=document.getElementById("pname").value;
 							    	 var url = "pay?";
-							 	       url += "count="+count+"&pid="+pid+"&uid="+uid+"&image1="+image+"&pname="+pname+"&shop_price="+price;
+							 	       url += "count="+count+"&pid="+pid+"&uid="+uid+"&image="+image+"&pname="+pname+"&shop_price="+price;
 						 	    //重新定位url
 
 							 	       window.location = url;

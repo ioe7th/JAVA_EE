@@ -18,9 +18,9 @@ public class CommentServiceImpl implements CommentService {
 	 @Autowired
 	    private CommentMapper commentMapper;
 	@Override
-	public void insertComment(String tra, String pro, String ser, String comment, String pno) {
+	public void insertComment(String tra, String pro, String ser, String comment,String path, String pno) {
 		// TODO Auto-generated method stub
-		commentMapper.insertcomment(tra, pro, ser, comment, pno);
+		commentMapper.insertcomment(tra, pro, ser, comment, path,pno);
 
 	}
 	@Override
